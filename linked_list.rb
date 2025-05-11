@@ -39,6 +39,19 @@ class LinkedList
     !found.nil?
   end
 
+  def remove_at(index)
+    raise IndexError if index.negative? || index >= size
+    removed_node = at(index) 
+    if (@first_node == removed_node)
+      @first_node = removed_node.next_node
+    else
+      prev_node = at(index-1)
+      prev_node.set_next_node(removed.next_node)
+    end
+    removed_node
+  end
+
+
   def find(value)
     cur_index = 0
     found = traverse do |index, node| 
