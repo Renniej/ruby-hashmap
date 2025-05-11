@@ -51,11 +51,9 @@ class HashMap
     bucket = getBucket(key)
     node = get(key) or return;
     node_index = bucket.find(node.value)
-    node = bucket.at(node_index)
-    puts "NODE INDEX #{node_index}"
-    prev_node = node_index != 0 ? bucket.at(node_index - 1) : nil
-    node.removeSelf(prev_node)
+    removed_node = bucket.remove_at(node_index)
     decrementEntries()
+    removed_node
   end
 
   def keys
