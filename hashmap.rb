@@ -88,7 +88,7 @@ class HashMap
   end
 
 
-private:
+  private
 
  
   def getBucket(key) 
@@ -97,19 +97,22 @@ private:
     @buckets[index]
   end
 
-  incrementEntries() {
+  def incrementEntries
     @numOfEntries += 1
     resize()
-  }
+  end
 
-  decrementEntries() {
+  def decrementEntries
     @numOfEntries -= 1
-    resize()
-  }
+    resize
+  end
 
-  resize() {
-    if @numOfEntries < (@capacity * @load_factor) return;
-
-  }
+  def resize
+    return if @numOfEntries < (@capacity * @load_factor)
+    oldBuckets = @buckets
+    @capacity = @capacity * 2
+    @buckets = Array.new(@capacity) { LinkedList.new }
+    entries.each {|pair| set(pair.first, pair.last)}
+  end
 
 end
