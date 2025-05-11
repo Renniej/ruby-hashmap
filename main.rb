@@ -13,6 +13,23 @@ test.set('jacket', 'blue')
 test.set('kite', 'pink')
 test.set('lion', 'golden')
 
+puts "Length : #{test.length}"
+puts "Set apple to LMAR"
+test.set("apple", "LMAR")
+puts test.get("apple")
+puts "Length : #{test.length}"
+puts "adding fish as nemo"
+test.set("fish", "nemo")
+puts test.get("fish")
+puts "Length : #{test.length}"
 
-puts test.entries
+puts "has dog? : #{test.has?("dog")}"
+puts "has demigoblin? : #{test.has?("demigoblin")}"
 
+puts "show me all the keys"
+puts test.keys
+puts "Length : #{test.length}"
+puts "remove dog"
+test.remove("dog")
+puts "has dog? : #{test.has?("dog")}"
+puts "Length : #{test.length}"
