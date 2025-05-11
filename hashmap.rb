@@ -32,11 +32,11 @@ class HashMap
 
   def get(key) 
     bucket = getBucket(key)
-    bucket.findNode? {| node | node[:value][:key] == key}
+    bucket.findNode {| node | node[:value][:key] == key}
   end
 
   def has?(key) 
-    (bucket.findNode? {| node | node[:value][:key] == key}).nil?
+    (bucket.findNode {| node | node[:value][:key] == key}).nil?
   end
 
  
@@ -51,8 +51,8 @@ class HashMap
 
   def keys
     keys = []
-    @buckets.each do
-      {|bucket| bucket.each {|node| keys.push(node[:value][:key]) } }
+    @buckets.each do |bucket| 
+      bucket.each {|node| keys.push(node[:value][:key]) } 
     end
     keys
   end
