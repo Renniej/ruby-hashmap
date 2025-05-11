@@ -23,7 +23,7 @@ class HashMap
     node.value[:key]== key
   }
     if (!node.nil?) 
-       node[:value] = {
+       node.value= {
         key: key,
         value: value, 
       }
@@ -38,19 +38,22 @@ class HashMap
 
   def get(key) 
     bucket = getBucket(key)
-    bucket.findNode {| node | node[:value][:key] == key}
+    bucket.findNode {| node | node.value[:key] == key}
   end
 
   def has?(key) 
-    (bucket.findNode {| node | node[:value][:key] == key}).nil?
+    bucket = getBucket(key)
+    !(bucket.findNode {| node | node.value[:key] == key}).nil?
   end
 
  
   def remove(key)
     bucket = getBucket(key)
-    node_index = bucket.find {| node | node[:value][:key] == key}
-    node = bucket.at(nodeIndex)
-    prev_node = nodeIndex != 0 ? bucket.at(nodeIndex - 1) : nil
+    node = get(key) or return;
+    node_index = bucket.find(node.value)
+    node = bucket.at(node_index)
+    puts "NODE INDEX #{node_index}"
+    prev_node = node_index != 0 ? bucket.at(node_index - 1) : nil
     node.removeSelf(prev_node)
     decrementEntries()
   end
@@ -58,7 +61,7 @@ class HashMap
   def keys
     keys = []
     @buckets.each do |bucket| 
-      bucket.each {|node| keys.push(node[:value][:key]) } 
+      bucket.each {|node| keys.push(node.value[:key]) } 
     end
     keys
   end
@@ -67,7 +70,7 @@ class HashMap
   def values
     values = []
     @buckets.each do |bucket| 
-      bucket.each {|node| values.push(node[:value][:value]) } 
+      bucket.each {|node| values.push(node.value[:value]) } 
     end
     values
   end
@@ -75,11 +78,13 @@ class HashMap
 
   def entries 
     pairs = []
+  
     @buckets.each do |bucket| 
       bucket.each do |node| 
-        key = node[:value][:key]
-        value = node[:value][:value]
-        pairs.push([key,value])
+       
+        key = node.value[:key]
+        value = node.value[:value]
+        pairs << [key,value]
       end
     end
     pairs
@@ -118,7 +123,12 @@ class HashMap
     oldBuckets = @buckets
     @capacity = @capacity * 2
     @buckets = Array.new(@capacity) { LinkedList.new }
-    entries.each {|pair| set(pair.first, pair.last)}
+    oldBuckets.each do | list |
+      list.each do | node |
+        set(node.value[:key], node.value[:value])
+      end
+    end
+
   end
 
 end
