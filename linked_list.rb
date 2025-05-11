@@ -60,8 +60,8 @@ class LinkedList
   end
 
   def findNode(&block) 
-    traverse do |index, node| 
-      &block.call(node)
+    traverse do |_, node| 
+      block.call(node)
     end
   end
 
