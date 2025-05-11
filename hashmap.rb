@@ -2,12 +2,12 @@ require_relative "linked_list"
 
 class HashMap
 
-  def initialize() {
+  def initialize() 
     @numOfEntries = 0
     @load_factor = 0.75
     @capacity = 16
     @buckets = Array.new(@capacity) { LinkedList.new }
-  }
+  end
 
   def hash(key)
     hash_code = 0
