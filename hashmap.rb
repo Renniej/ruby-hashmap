@@ -18,9 +18,15 @@ class HashMap
 
   def set(key,value)
     bucket = getBucket(key)
-    node = bucket.findNode? {| node | node[:value][:key] == key}
+    node = bucket.findNode {| node | 
+
+    node.value[:key]== key
+  }
     if (!node.nil?) 
-       node[:value] = value
+       node[:value] = {
+        key: key,
+        value: value, 
+      }
     else
       bucket.append({
         key: key,
