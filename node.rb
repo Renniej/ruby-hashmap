@@ -17,4 +17,8 @@ class Node
     prev_node.set_next_node(@next_node)
   end
 
+  def to_s
+    "Node value : #{@value}"
+  end
+
 end
