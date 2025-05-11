@@ -13,9 +13,7 @@ class Node
     @next_node = node
   end
 
-  def removeSelf(prev_node) 
-    prev_node&.set_next_node(@next_node)
-  end
+ 
 
   def to_s
     "Node value : #{@value}"
